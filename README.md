@@ -36,3 +36,17 @@ console.log(dc.effectiveDamage(100, 50, 30));
 実効ダメージは、 100 * (1 - (1 / 6)) であり、 
 計算すると 83.33333... となり、
 小数点以下の四捨五入の結果、実効ダメージの 83 の値が得られます。
+
+    steps:
+      - checkout
+      - run: npm install
+      - run: mkdir junit
+      - run:
+          command: node_modules/.bin/mocha test --reporter mocha-junit-reporter
+          environment:
+            MOCHA_FILE: ./junit/test-results.xml
+          when: always
+      - store_test_results:
+          path: ./junit
+      - store_artifacts:
+          path: ./junit
